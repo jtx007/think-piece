@@ -1,8 +1,12 @@
 import React from 'react';
-
+import { firestore } from '../firebase'
 import moment from 'moment';
 
-const Post = ({ title, content, user, createdAt, stars, comments }) => {
+const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
+  const postRef = firestore.doc(`posts/${id}`)
+  console.log(postRef)
+  const incrementStar = () => postRef.update({ stars: stars + 1})
+  const remove = () => postRef.delete()
   return (
     <article className="Post">
       <div className="Post--content">
@@ -27,8 +31,8 @@ const Post = ({ title, content, user, createdAt, stars, comments }) => {
           <p>{moment(createdAt).calendar()}</p>
         </div>
         <div>
-          <button className="star">Star</button>
-          <button className="delete">Delete</button>
+          <button onClick={incrementStar} className="star">Star</button>
+          <button onClick={remove} className="delete">Delete</button>
         </div>
       </div>
     </article>
