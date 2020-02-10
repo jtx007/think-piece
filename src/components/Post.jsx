@@ -28,7 +28,7 @@ const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
             {comments}
           </p>
           <p>Posted by {user.displayName}</p>
-          <p>{moment(createdAt).calendar()}</p>
+          <p>{moment(createdAt.toDate()).calendar()}</p>
         </div>
         <div>
           <button onClick={incrementStar} className="star">Star</button>
