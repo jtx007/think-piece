@@ -13,7 +13,6 @@ class AddPost extends Component {
 
     const { title, content } = this.state;
     const { uid, displayName, email, photoURL } = auth.currentUser || {}
-
     const post = {
       title,
       content,
@@ -36,6 +35,7 @@ class AddPost extends Component {
 
   render() {
     const { title, content } = this.state;
+    console.log(auth.currentUser)
     return (
       <form onSubmit={this.handleSubmit} className="AddPost">
         <input

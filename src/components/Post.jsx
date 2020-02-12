@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext }  from 'react';
 import { firestore } from '../firebase'
+import { UserContext } from '../providers/UserProvider'
 import moment from 'moment';
 
+const belongsToCurrentUser = (currentUser, postAuthor) => {
+  if (!currentUser) return false;
+  return currentUser.uid === postAuthor.uid;
+}
+
 const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
+  const currentUser = useContext(UserContext)
   const postRef = firestore.doc(`posts/${id}`)
-  console.log(user)
   const incrementStar = () => postRef.update({ stars: stars + 1})
   const remove = () => postRef.delete()
   return (
@@ -32,7 +38,7 @@ const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
         </div>
         <div>
           <button onClick={incrementStar} className="star">Star</button>
-          <button onClick={remove} className="delete">Delete</button>
+          {belongsToCurrentUser(currentUser, user) && <button onClick={remove} className="delete">Delete</button>}
         </div>
       </div>
     </article>
