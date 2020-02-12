@@ -4,6 +4,7 @@ import moment from 'moment';
 
 const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
   const postRef = firestore.doc(`posts/${id}`)
+  console.log(user)
   const incrementStar = () => postRef.update({ stars: stars + 1})
   const remove = () => postRef.delete()
   return (

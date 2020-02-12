@@ -4,7 +4,7 @@ import moment from 'moment';
 import { signOut } from '../firebase'
 const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
 
-  
+  console.log(displayName)
 
   return (
     <section className="CurrentUser">

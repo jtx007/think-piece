@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signInWithGoogle } from '../firebase'
+import { signInWithGoogle, traditionalSignIn } from '../firebase'
 class SignIn extends Component {
   state = { email: '', password: '' };
 
@@ -11,8 +11,8 @@ class SignIn extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    this.setState({ email: '', password: '' });
+    const { email, password } = this.state
+    traditionalSignIn(email, password)
   };
 
   render() {
