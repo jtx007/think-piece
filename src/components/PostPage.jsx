@@ -46,7 +46,10 @@ class PostPage extends Component {
   }
 
   createComment = (comment) => {
-    console.log(comment)
+    this.commentsRef.add({
+      ...comment
+      
+    })
   }
 
   render() {
