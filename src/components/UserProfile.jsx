@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { firestore, auth } from "../firebase";
+import { firestore, auth, storage } from "../firebase";
 
 class UserProfile extends Component {
   state = { displayName: "" };
   imageInput = null;
 
+
+  
  
 
   handleChange = event => {
@@ -17,6 +19,12 @@ class UserProfile extends Component {
     const { displayName } = this.state;
     if (displayName) {
       firestore.doc(`users/${auth.currentUser.uid}`).update({ displayName });
+    }
+
+    if (this.imageInput) {
+        storage.ref().child('user-profiles').child(auth.currentUser.uid).child(this.imageInput.name).put(this.imageInput.files[0])
+        .then(response => response.ref.getDownloadURL())
+        .then(photoURL => firestore.doc(`users/${auth.currentUser.uid}`).update({ photoURL}))
     }
   };
 
@@ -32,8 +40,8 @@ class UserProfile extends Component {
             type="text"
             name="displayName"
           />
-          <input type="file" ref={ref => this.imageInput = ref} />
-          <input className="update"  type="submit" />
+          <input name="profilepicture" type="file" ref={ref => this.imageInput = ref} />
+          <input  className="update"  type="submit" />
         </form>
       </section>
     );
